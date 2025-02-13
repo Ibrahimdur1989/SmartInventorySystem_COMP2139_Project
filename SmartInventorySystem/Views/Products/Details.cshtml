@@ -1,0 +1,17 @@
+@model SmartInventorySystem.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h2>Product Details</h2>
+
+<table class="table">
+    <tr><th>Name</th><td>@Model.Name</td></tr>
+    <tr><th>Price</th><td>@Model.Price.ToString("C")</td></tr>
+    <tr><th>Stock</th><td>@Model.QuantityInStock</td></tr>
+    <tr><th>Category</th><td>@Model.Category?.Name</td></tr>
+</table>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

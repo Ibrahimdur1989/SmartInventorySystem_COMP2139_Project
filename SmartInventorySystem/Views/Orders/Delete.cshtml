@@ -1,0 +1,18 @@
+@model SmartInventorySystem.Models.Order
+
+@{
+    ViewData["Title"] = "Delete Order";
+}
+
+<h2>Are you sure you want to delete this order?</h2>
+
+<table class="table">
+    <tr><th>Order Date</th><td>@Model.OrderDate.ToString("yyyy-MM-dd")</td></tr>
+    <tr><th>Total Price</th><td>@Model.TotalPrice.ToString("C")</td></tr>
+</table>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
