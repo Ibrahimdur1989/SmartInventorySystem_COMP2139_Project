@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SmartInventorySystem.Data;
 using SmartInventorySystem.Models;
@@ -41,6 +42,13 @@ namespace SmartInventorySystem.Controllers
             }
             return View(order);
         }
+        public IActionResult Create()
+        {
+            ViewBag.Orders = new SelectList(_context.Orders, "Id", "OrderDate");
+            ViewBag.Products = new SelectList(_context.Products, "Id", "Name");
+            return View();
+        }
+
     }
 
 }
