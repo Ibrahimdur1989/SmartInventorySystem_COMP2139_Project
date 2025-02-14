@@ -1,26 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmartInventorySystem.Models
 {
     public class Order
     {
         public int Id { get; set; }
-        public DateTime OrderDate { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        [Required]
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow; // Enforce UTC
 
-        public decimal TotalPrice 
-        { 
-            get 
-            { 
-                decimal total = 0;
-                foreach (var item in OrderItems)
-                {
-                    total += item.Quantity * item.Product.Price;
-                }
-                return total;
-            }
-        }
+        [Required]
+        public decimal TotalPrice { get; set; }
+
+        [Required]
+        public string Status { get; set; } = "Pending";
+
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }

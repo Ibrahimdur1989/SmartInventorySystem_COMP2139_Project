@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartInventorySystem.Data;
 using SmartInventorySystem.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SmartInventorySystem.Controllers
 {
@@ -14,73 +17,36 @@ namespace SmartInventorySystem.Controllers
             _context = context;
         }
 
+        // GET: OrderItems
         public async Task<IActionResult> Index()
         {
-            var orderItems = await _context.OrderItems
-                .Include(oi => oi.Order)
-                .Include(oi => oi.Product)
-                .ToListAsync();
-            return View(orderItems);
+            var orderItems = _context.OrderItems.Include(o => o.Product).Include(o => o.Order);
+            return View(await orderItems.ToListAsync());
         }
 
+        // GET: OrderItems/Create
         public IActionResult Create()
         {
+            ViewBag.Orders = new SelectList(_context.Orders, "Id", "Id");
+            ViewBag.Products = new SelectList(_context.Products, "Id", "Name");
             return View();
         }
 
+        // POST: OrderItems/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(OrderItem orderItem)
+        public async Task<IActionResult> Create([Bind("OrderId,ProductId,Quantity,Price")] OrderItem orderItem)
         {
             if (ModelState.IsValid)
             {
-                _context.OrderItems.Add(orderItem);
+                _context.Add(orderItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Orders = new SelectList(_context.Orders, "Id", "Id", orderItem.OrderId);
+            ViewBag.Products = new SelectList(_context.Products, "Id", "Name", orderItem.ProductId);
             return View(orderItem);
-        }
-
-        public async Task<IActionResult> Edit(int id)
-        {
-            var orderItem = await _context.OrderItems.FindAsync(id);
-            if (orderItem == null) return NotFound();
-            return View(orderItem);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, OrderItem orderItem)
-        {
-            if (id != orderItem.Id) return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                _context.Update(orderItem);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(orderItem);
-        }
-
-        public async Task<IActionResult> Delete(int id)
-        {
-            var orderItem = await _context.OrderItems.FindAsync(id);
-            if (orderItem == null) return NotFound();
-            return View(orderItem);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var orderItem = await _context.OrderItems.FindAsync(id);
-            if (orderItem != null)
-            {
-                _context.OrderItems.Remove(orderItem);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
         }
     }
 }
