@@ -1,19 +1,51 @@
-﻿@page
-@model SmartInventorySystem.Views.Orders.Confirmation
+﻿@model SmartInventorySystem.Models.Order
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Order Confirmation";
 }
 
-<!DOCTYPE html>
+<h2>Order Confirmation</h2>
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
-</div>
-</body>
-</html>
+<p>Thank you for your order! Your order is now being processed.</p>
+
+<h3>Order Summary</h3>
+<p><strong>Order Number:</strong> @Model.Id</p>
+<p><strong>Order Date:</strong> @Model.OrderDate.ToString("MMMM dd, yyyy")</p>
+<p><strong>Status:</strong> @Model.Status</p>
+
+<h4>Order Items:</h4>
+@if (Model.OrderItems.Any())
+{
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@(item.Quantity * item.Price).ToString("C")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No items in the order.</p>
+}
+
+<h4>Total Price: @Model.TotalPrice.ToString("C")</h4>
+
+<p>Your order will be processed shortly.</p>
+
+
+<a asp-action="Index" asp-controller="Orders" class="btn btn-secondary">Back to list</a>
