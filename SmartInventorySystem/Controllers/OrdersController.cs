@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Humanizer;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartInventorySystem.Data;
@@ -53,7 +50,7 @@ namespace SmartInventorySystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GuestName, OrderDate, TotalPrice, Status")] Order order,
-            int ProductId, int Quantity)
+            int productId, int quantity)
         {
             if (ModelState.IsValid)
             {
@@ -66,15 +63,15 @@ namespace SmartInventorySystem.Controllers
                 
 
                 
-                    var product = await _context.Products.FindAsync(ProductId);
+                    var product = await _context.Products.FindAsync(productId);
                     if (product != null)
                     {
                         var orderItem = new OrderItem
                         {
                             OrderId = order.Id,
-                            ProductId = ProductId,
-                            Quantity = Quantity,
-                            Price = product.Price *  Quantity
+                            ProductId = productId,
+                            Quantity = quantity,
+                            Price = product.Price *  quantity
                         };
                         order.TotalPrice += orderItem.Price;
                         _context.OrderItems.Add(orderItem);

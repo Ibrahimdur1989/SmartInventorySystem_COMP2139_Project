@@ -1,3 +1,8 @@
+
+<!--What This Form Does:
+ Allows users to edit product details (name, price, quantity, low stock threshold, and category).
+ Validates input fields and displays error messages in red if the input is incorrect.
+ Provides "Save" and "Cancel" buttons for usability.-->
 @model SmartInventorySystem.Models.Product
 
 @{
@@ -5,9 +10,10 @@
 }
 
 <h2>Edit Product</h2>
-
+<!-- Form for editing a product -->
 <form asp-action="Edit">
     <input type="hidden" asp-for="ProductId" />
+    <!-- Product Name Input -->
 
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -32,7 +38,7 @@
         <input asp-for="LowStockThreshold" class="form-control" type="number" required />
         <span asp-validation-for="LowStockThreshold" class="text-danger"></span>
     </div>
-
+    <!-- Category Selection Dropdown -->
     <div class="form-group">
         <label asp-for="CategoryId"></label>
         <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>

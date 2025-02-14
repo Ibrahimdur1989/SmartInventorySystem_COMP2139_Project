@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SmartInventorySystem.Data;
 using SmartInventorySystem.Models;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace SmartInventorySystem.Controllers
 {
     public class ProductsController : Controller
