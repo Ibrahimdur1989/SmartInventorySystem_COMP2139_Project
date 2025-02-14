@@ -5,7 +5,8 @@ namespace SmartInventorySystem.Models
 {
     public class Product
     {
-        public int Id { get; set; }
+        [Key]
+        public int ProductId { get; set; }
 
         [Required]
         public string Name { get; set; } = string.Empty;

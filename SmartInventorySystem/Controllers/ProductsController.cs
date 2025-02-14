@@ -80,7 +80,7 @@ namespace SmartInventorySystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,QuantityInStock,LowStockThreshold,CategoryId")] Product product)
         {
-            if (id != product.Id)
+            if (id != product.ProductId)
             {
                 return NotFound();
             }
@@ -94,7 +94,7 @@ namespace SmartInventorySystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!ProductExists(product.ProductId))
                     {
                         return NotFound();
                     }
@@ -120,7 +120,7 @@ namespace SmartInventorySystem.Controllers
 
             var product = await _context.Products
                 .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ProductId == id);
 
             if (product == null)
             {
@@ -140,7 +140,7 @@ namespace SmartInventorySystem.Controllers
 
             var product = await _context.Products
                 .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ProductId == id);
 
             if (product == null)
             {
@@ -166,7 +166,7 @@ namespace SmartInventorySystem.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.ProductId == id);
         }
     }
 }

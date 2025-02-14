@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartInventorySystem.Data;
@@ -44,21 +45,46 @@ namespace SmartInventorySystem.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewBag.Products = _context.Products.ToList();
             return View();
         }
 
         // POST: Orders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderDate,TotalPrice,Status")] Order order)
+        public async Task<IActionResult> Create([Bind("GuestName, OrderDate, TotalPrice, Status")] Order order,
+            int ProductId, int Quantity)
         {
             if (ModelState.IsValid)
             {
                 order.OrderDate = DateTime.SpecifyKind(order.OrderDate, DateTimeKind.Utc); // Ensure UTC
-                _context.Add(order);
+                order.TotalPrice = 0;
+                
+                _context.Orders.Add(order);
+                await _context.SaveChangesAsync();
+
+                
+
+                
+                    var product = await _context.Products.FindAsync(ProductId);
+                    if (product != null)
+                    {
+                        var orderItem = new OrderItem
+                        {
+                            OrderId = order.Id,
+                            ProductId = ProductId,
+                            Quantity = Quantity,
+                            Price = product.Price *  Quantity
+                        };
+                        order.TotalPrice += orderItem.Price;
+                        _context.OrderItems.Add(orderItem);
+                    }
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
+            ViewBag.Products = _context.Products.ToList();
             return View(order);
         }
 

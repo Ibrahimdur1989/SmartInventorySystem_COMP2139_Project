@@ -13,6 +13,7 @@
 <table class="table table-bordered">
     <thead>
     <tr>
+        <th>Guest Name</th>
         <th>Order Date</th>
         <th>Total Price</th>
         <th>Status</th>
@@ -23,6 +24,7 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>@item.GuestName</td>
             <td>@item.OrderDate.ToShortDateString()</td>
             <td>@item.TotalPrice</td>
             <td>@item.Status</td>
