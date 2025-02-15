@@ -49,40 +49,40 @@ namespace SmartInventorySystem.Controllers
         // POST: Orders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GuestName, OrderDate, TotalPrice, Status")] Order order,
-            int productId, int quantity)
+        public async Task<IActionResult> Create(string GuestName, DateTime OrderDate,
+            int ProductId, int Quantities, string Status)
         {
             if (ModelState.IsValid)
             {
-                order.OrderDate = DateTime.SpecifyKind(order.OrderDate, DateTimeKind.Utc); // Ensure UTC
-                order.TotalPrice = 0;
+                var product = await _context.Products.FindAsync(ProductId);
+                if (product == null)
+                {
+                    return BadRequest("Product not found");
+                }
+                
+                var order = new Order
+                {
+                    GuestName = GuestName,
+                    OrderDate = DateTime.SpecifyKind(OrderDate, DateTimeKind.Utc), // Ensure UTC
+                    Status = Status,
+                    TotalPrice = product.Price * Quantities, // Calculate TotalPrice
+                    OrderItems = new List<OrderItem>
+                    {
+                        new OrderItem
+                        {
+                            ProductId = ProductId,
+                            Quantity = Quantities,
+                            Price = product.Price * Quantities
+                        }
+                    }
+                };
                 
                 _context.Orders.Add(order);
-                await _context.SaveChangesAsync();
-
-                
-
-                
-                    var product = await _context.Products.FindAsync(productId);
-                    if (product != null)
-                    {
-                        var orderItem = new OrderItem
-                        {
-                            OrderId = order.Id,
-                            ProductId = productId,
-                            Quantity = quantity,
-                            Price = product.Price *  quantity
-                        };
-                        order.TotalPrice += orderItem.Price;
-                        _context.OrderItems.Add(orderItem);
-                    }
-                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             
-            ViewBag.Products = _context.Products.ToList();
-            return View(order);
+            return View();
         }
 
         // GET: Orders/Edit/5
