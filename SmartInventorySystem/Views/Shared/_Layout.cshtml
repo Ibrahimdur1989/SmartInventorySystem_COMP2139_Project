@@ -1,44 +1,30 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - SmartInventorySystem</title>
+    <title>@ViewData["Title"] - Smart Inventory System</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/SmartInventorySystem.styles.css" asp-append-version="true"/>
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/"> Smart Inventory</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" asp-controller="Categories" asp-action="Index">Categories</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Products" asp-action="Index">Products</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="Orders" asp-action="Index">Orders</a></li>
-                <li class="nav-item"><a class="nav-link" asp-controller="OrderItems" asp-action="Index">Order Tracking</a></li>
-            </ul>
-        </div>
-    </nav>
 
-</header>
+<!-- Partial View for Header -->
+@Html.Partial("_Header")
+
+
 <div class="container">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        <p> &copy; 2025 - Smart Inventory System - Designed by Group 24 </p>
-        <p>Developed by: Hanson Bani Khaled, Gadise Oli, Ebrahim Al-Serri</p>
-    </div>
-</footer>
+<!-- Partial View for Footer -->
+@Html.Partial("_Footer")
+
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
