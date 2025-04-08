@@ -5,12 +5,12 @@ using SendGrid.Helpers.Mail;
 
 namespace SmartInventorySystem.Services;
 
-public class EmailSander : IEmailSender
+public class EmailSender : IEmailSender
 {
     
     private readonly string _sendGridApiKey;
 
-    public EmailSander(IConfiguration configuration)
+    public EmailSender(IConfiguration configuration)
     {
         _sendGridApiKey = configuration["sendGrid:ApiKey"] 
                           ??  throw new ArgumentNullException("SendGrid Key is missing");

@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using Microsoft.EntityFrameworkCore;
 using SmartInventorySystem.Models;
 using SmartInventorySystem.Areas.ProjectManagement.Models;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SmartInventorySystem.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
