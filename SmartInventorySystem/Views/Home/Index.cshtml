@@ -9,13 +9,13 @@
     <!-- Navigation buttons for managing different sections -->
     <div class="row mt-4">
         <div class="col-md-4">
-            <a href="/Categories" class="btn btn-primary btn-lg">Manage Categories</a>
+            <a asp-area="ProjectManagement" asp-controller="Categories" asp-action="Index" class="btn btn-primary btn-lg">Manage Categories</a>
         </div>
         <div class="col-md-4">
-            <a href="/Products" class="btn btn-success btn-lg">Manage Products</a>
+            <a asp-area="ProjectManagement" asp-controller="Products" asp-action="Index" class="btn btn-success btn-lg">Manage Products</a>
         </div>
         <div class="col-md-4">
-            <a href="/Orders" class="btn btn-warning btn-lg">Manage Orders</a>
+            <a asp-area="ProjectManagement" asp-controller="Orders" asp-action="Index" class="btn btn-warning btn-lg">Manage Orders</a>
         </div>
     </div>
 </div>

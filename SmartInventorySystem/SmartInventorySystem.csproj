@@ -7,19 +7,72 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.2" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.3" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+      <PackageReference Include="SendGrid" Version="9.29.3" />
+      <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+      <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Categories\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Categories\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Categories\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Categories\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\OrderItems\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\OrderItems\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\OrderItems\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\OrderItems\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\OrderItems\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Orders\Confirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Orders\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Orders\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Orders\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Orders\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Orders\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Products\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Products\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Products\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Products\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Products\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Categories\Create.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Categories\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Categories\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Categories\Index.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\OrderItems\Create.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\OrderItems\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\OrderItems\Details.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\OrderItems\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\OrderItems\Index.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Orders\Confirmation.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Orders\Create.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Orders\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Orders\Details.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Orders\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Orders\Index.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Products\Create.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Products\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Products\Details.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Products\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Products\Index.cshtml" />
     </ItemGroup>
 
 </Project>
