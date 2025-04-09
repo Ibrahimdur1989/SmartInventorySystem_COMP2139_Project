@@ -81,7 +81,7 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
                 return NotFound();
             }
 
-            PopulateCategoryDropdown(product.CategoryId);
+            
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
@@ -89,9 +89,9 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,QuantityInStock,LowStockThreshold,CategoryId")] Product product)
+        public async Task<IActionResult> Edit(int ProductId, [Bind("ProductId,Name,Price,QuantityInStock,LowStockThreshold,CategoryId")] Product product)
         {
-            if (id != product.ProductId)
+            if (ProductId != product.ProductId)
             {
                 return NotFound();
             }
@@ -105,7 +105,8 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductId))
+                    // !ProductExists(product.ProductId)
+                    if (!_context.Products.Any(e => e.ProductId == product.ProductId))
                     {
                         return NotFound();
                     }
@@ -117,7 +118,7 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            PopulateCategoryDropdown(product.CategoryId);
+            
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
@@ -168,9 +169,9 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int ProductId)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.FindAsync(ProductId);
             if (product != null)
             {
                 _context.Products.Remove(product);
