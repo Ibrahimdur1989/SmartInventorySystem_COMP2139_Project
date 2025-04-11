@@ -11,31 +11,49 @@
         <a asp-action="Create" class="btn btn-primary mt-3">Add New Product</a>
     </div>
 
-    <table class="table mt-4 text-center">
-        <thead>
-        <tr>
-            <th>product Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Alert</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model)
-        {
+    <div class="bg-white p-3 rounded shadow d-inline-block  mb-5">
+        <div class="d-flex flex-column align-items-start mb-3">
+            <label for="searchBox" class="form-label fw-bold ms-4">Search Products</label>
+            <input type="text" id="searchBox" placeholder="Search by name or category" />
+        </div>
+    </div>
+    
+    <div class="text-center mb-3" id="loader" style="display: none;">
+        <img src="~/images/spinner.gif" alt="Loading..." />
+    </div>
+    
+
+    <div id="productResults">
+        <table class="table mt-4 text-center">
+            <thead>
             <tr>
-                <td>@item.Name</td>
-                <td>@item.Category?.Name</td>
-                <td>$@item.Price</td>
-                <td>@item.QuantityInStock</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-warning btn-sm">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-info btn-sm">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger btn-sm">Delete</a>
-                </td>
+                <th>product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Alert</th>
             </tr>
-        }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Category?.Name</td>
+                    <td>$@item.Price</td>
+                    <td>@item.QuantityInStock</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/productSearch.js"></script>
+}
