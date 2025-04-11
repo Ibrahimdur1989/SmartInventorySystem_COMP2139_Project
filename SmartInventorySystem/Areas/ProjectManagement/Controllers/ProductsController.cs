@@ -194,13 +194,16 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
             ViewData["Categories"] = new SelectList(categories, "Id", "Name", selectedId);
         }
 
-        [HttpGet]
         public async Task<IActionResult> Search(string term)
         {
-            var results = await _context.Products
-                .Include(p => p.Category)
-                .Where(p => p.Name.Contains(term) || p.Category.Name.Contains(term))
-                .ToListAsync();
+            var query = _context.Products.Include(p => p.Category).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(term))
+            {
+                query = query.Where(p => p.Name.StartsWith(term) || p.Category.Name.StartsWith(term));
+            }
+
+            var results = await query.ToListAsync();
 
             return PartialView("ProductListPartial", results);
         }
