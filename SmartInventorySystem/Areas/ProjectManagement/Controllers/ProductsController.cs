@@ -54,6 +54,10 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = true });
+                }
                 return RedirectToAction(nameof(Index));
             }
 
@@ -64,6 +68,11 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
             }
             PopulateCategoryDropdown(product.CategoryId);
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
+             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new { success = false, errors });
+            }
             return View(product);
         }
 
