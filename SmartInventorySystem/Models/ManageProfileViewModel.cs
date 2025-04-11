@@ -1,4 +1,4 @@
-namespace DefaultNamespace;
+namespace SmartInventorySystem.Models;
 
 using System.ComponentModel.DataAnnotations;
 

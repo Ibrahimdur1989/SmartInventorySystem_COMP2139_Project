@@ -1,53 +1,77 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SmartInventorySystem.Models; // Make sure your ViewModel and ApplicationUser are in this namespace
 
-[Authorize]
-public class ManageController : Controller
+namespace SmartInventorySystem.Controllers
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-
-    public ManageController(UserManager<ApplicationUser> userManager)
+    [Authorize]
+    public class ManageController : Controller
     {
-        _userManager = userManager;
-    }
+        private readonly UserManager<ApplicationUser> _userManager;
 
-    // GET: /Manage/Profile
-    public async Task<IActionResult> Profile()
-    {
-        var user = await _userManager.GetUserAsync(User);
-        var model = new ManageProfileViewModel
+        public ManageController(UserManager<ApplicationUser> userManager)
         {
-            FullName = user.FullName,
-            ContactInfo = user.ContactInfo,
-            PreferredCategory = user.PreferredCategory
-        };
-        return View(model);
-    }
-
-    // POST: /Manage/Profile
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Profile(ManageProfileViewModel model)
-    {
-        if (!ModelState.IsValid) return View(model);
-
-        var user = await _userManager.GetUserAsync(User);
-        user.FullName = model.FullName;
-        user.ContactInfo = model.ContactInfo;
-        user.PreferredCategory = model.PreferredCategory;
-
-        var result = await _userManager.UpdateAsync(user);
-
-        if (result.Succeeded)
-        {
-            TempData["Success"] = "Profile updated successfully!";
-            return RedirectToAction("Profile");
+            _userManager = userManager;
         }
 
-        foreach (var error in result.Errors)
-            ModelState.AddModelError("", error.Description);
+        // GET: /Manage/Profile
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
 
-        return View(model);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var model = new ManageProfileViewModel
+            {
+                FullName = user.FullName,
+                ContactInfo = user.ContactInfo,
+                PreferredCategory = user.PreferredCategory
+            };
+
+            return View(model);
+        }
+
+        // POST: /Manage/Profile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(ManageProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            user.FullName = model.FullName;
+            user.ContactInfo = model.ContactInfo;
+            user.PreferredCategory = model.PreferredCategory;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                TempData["Success"] = "Profile updated successfully!";
+                return RedirectToAction(nameof(Profile));
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
+        }
     }
 }
