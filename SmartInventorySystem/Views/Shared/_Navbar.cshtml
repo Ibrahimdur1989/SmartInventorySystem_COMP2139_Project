@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Authorization
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -18,38 +18,40 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!--  --->
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             
             <ul class="navbar-nav ms-5">
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="Categories" asp-action="Index">
-                        <i class="fa-solid fa-table-cells fa-lg"></i> Categories
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="Products" asp-action="Index">
-                        <i class="fa-solid fa-cart-shopping fa-lg"></i> Products
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="Orders" asp-action="Index">
-                        <i class="fa-solid fa-boxes-packing fa-lg"></i> Orders
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="OrderItems" asp-action="Index">
-                        <i class="fa-solid fa-truck-ramp-box fa-lg"></i> Order Tracking
-                    </a>
-                </li>
+                
+                
 
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="Categories" asp-action="Index">
+                            <i class="fa-solid fa-table-cells fa-lg"></i> Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="Products" asp-action="Index">
+                            <i class="fa-solid fa-cart-shopping fa-lg"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="Orders" asp-action="Index">
+                            <i class="fa-solid fa-boxes-packing fa-lg"></i> Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="ProjectManagement" asp-controller="OrderItems" asp-action="Index">
+                            <i class="fa-solid fa-truck-ramp-box fa-lg"></i> Order Tracking
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-light"
-                           asp-area="Identity"
-                           asp-page="/Account/Manage/Index" asp-route-returnUrl="/"
-                           title="Manage your Profile"><i class="fa-solid fa-user"></i> Profile
+                           asp-area=""
+                           asp-controller="Manage"
+                           asp-action="Profile"><i class="fa-solid fa-user"></i> Profile
                         </a>
                     </li>
                     <li class="nav-item">

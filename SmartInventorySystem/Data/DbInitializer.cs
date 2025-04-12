@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-namespace DefaultNamespace;
+using SmartInventorySystem.Models;
 public static class DbInitializer
 {
     public static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)

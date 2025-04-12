@@ -10,10 +10,12 @@ namespace SmartInventorySystem.Controllers
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public ManageController(UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        
+        public ManageController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: /Manage/Profile
@@ -42,6 +44,7 @@ namespace SmartInventorySystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Profile(ManageProfileViewModel model)
         {
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -72,6 +75,33 @@ namespace SmartInventorySystem.Controllers
             }
 
             return View(model);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            Console.WriteLine("DeleteAccount() called!");
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            await _signInManager.SignOutAsync(); // Sign out before deletion
+            var result = await _userManager.DeleteAsync(user);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return RedirectToAction(nameof(Profile));
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

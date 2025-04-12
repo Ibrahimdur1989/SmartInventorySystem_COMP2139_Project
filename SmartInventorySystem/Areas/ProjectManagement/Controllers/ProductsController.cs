@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering; 
@@ -10,6 +11,7 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
 {
     [Area("ProjectManagement")]
     [Route("[area]/[controller]/[action]")]
+    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private readonly ILogger<ProductsController> _logger;
@@ -123,7 +125,7 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
                     await _context.SaveChangesAsync();
                     _logger.LogInformation("Product {Name} Updated at {Time}", product.Name, DateTime.Now);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error while updating product");
                     

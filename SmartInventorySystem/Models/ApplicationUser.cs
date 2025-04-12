@@ -10,9 +10,9 @@ namespace SmartInventorySystem.Models
         public string FullName { get; set; }
 
         [Display(Name = "Contact Info")]
-        public string ContactInfo { get; set; }
+        public string? ContactInfo { get; set; }
 
         [Display(Name = "Preferred Category")]
-        public string PreferredCategory { get; set; }
+        public string? PreferredCategory { get; set; }
     }
 }

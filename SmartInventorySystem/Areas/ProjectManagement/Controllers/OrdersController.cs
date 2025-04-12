@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering; 
@@ -10,13 +11,16 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
 {
     [Area("ProjectManagement")]
     [Route("[area]/[controller]/[action]")]
+    [Authorize(Roles = "Admin, RegularUser")]
     public class OrdersController : Controller
     {
+        private readonly ILogger<OrdersController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context, ILogger<OrdersController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Orders

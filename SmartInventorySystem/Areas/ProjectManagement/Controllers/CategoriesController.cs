@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering; 
@@ -14,6 +15,7 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
     // Controller to manage categories in the inventory system
     [Area("ProjectManagement")]
     [Route("[area]/[controller]/[action]")]
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly ILogger<CategoriesController> _logger;
