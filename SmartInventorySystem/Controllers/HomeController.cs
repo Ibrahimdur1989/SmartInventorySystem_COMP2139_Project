@@ -31,12 +31,25 @@ public class HomeController : Controller
 
     // Handles errors and displays the Error page when an exception occurs
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public IActionResult Error(int? statusCode = null)
     {
         _logger.LogError("Accessed HomeController Error at {Time}", DateTime.Now);
-        // Creates an instance of ErrorViewModel and assigns the current request ID
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+        if (statusCode.HasValue)
+        {
+            if (statusCode == 404)
+            {
+                return View("NotFound");
+            }
+            else if (statusCode == 500)
+            {
+                return View("ServerError");
+            }
+        }
+        return View("ServerError");
     }
+
+    
     [HttpGet]
     public IActionResult GeneralSearch(string searchType, string searchString)
     {
