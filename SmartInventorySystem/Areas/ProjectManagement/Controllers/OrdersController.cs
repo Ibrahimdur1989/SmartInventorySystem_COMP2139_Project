@@ -62,37 +62,48 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int ProductId, int Quantities, DateTime OrderDate, string GuestName, string Status)
         {
-            var product = await _context.Products.FindAsync(ProductId);
-
-            if (product == null)
+            try
             {
-                ModelState.AddModelError("", "Product not found.");
-                ViewData["Products"] = new SelectList(_context.Products, "Id", "Name", ProductId);
-                return View();
-            }
+                var product = await _context.Products.FindAsync(ProductId);
 
-            var order = new Order
-            {
-                GuestName = GuestName,
-                OrderDate = DateTime.SpecifyKind(OrderDate, DateTimeKind.Utc), // Ensure UTC
-                Status = Status,
-                TotalPrice = product.Price * Quantities, // Calculate TotalPrice
-                OrderItems = new List<OrderItem>
+                if (product == null)
                 {
-                    new OrderItem
-                    {
-                        ProductId = ProductId,
-                        Quantity = Quantities,
-                        Price = product.Price * Quantities
-                    }
+                    ModelState.AddModelError("", "Product not found.");
+                    ViewData["Products"] = new SelectList(_context.Products, "Id", "Name", ProductId);
+                    return View();
                 }
-            };
 
-            if (ModelState.IsValid)
+                var order = new Order
+                {
+                    GuestName = GuestName,
+                    OrderDate = DateTime.SpecifyKind(OrderDate, DateTimeKind.Utc), // Ensure UTC
+                    Status = Status,
+                    TotalPrice = product.Price * Quantities, // Calculate TotalPrice
+                    OrderItems = new List<OrderItem>
+                    {
+                        new OrderItem
+                        {
+                            ProductId = ProductId,
+                            Quantity = Quantities,
+                            Price = product.Price * Quantities
+                        }
+                    }
+                };
+
+                if (ModelState.IsValid)
+                {
+                    _context.Orders.Add(order);
+                    await _context.SaveChangesAsync();
+                    
+                    _logger.LogInformation("Order created successfully");
+                    
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception ex)
             {
-                _context.Orders.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _logger.LogError(ex, "Error creating order");
+                TempData["Error"] = "An error occured. Please try again.";
             }
 
             // Repopulate dropdowns if needed
