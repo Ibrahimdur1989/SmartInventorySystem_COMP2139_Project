@@ -7,6 +7,6 @@ dotnet ef database update
 # 3️⃣ Run the application
 dotnet run 
 
-# 4 To Access Manager Account 
+# 4️⃣ To Access Manager Account 
 Email: admin@inventory.com
 Pass: Admin1912/*
