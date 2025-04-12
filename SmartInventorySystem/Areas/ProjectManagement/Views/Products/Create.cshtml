@@ -13,6 +13,14 @@
     </div>
 }
 
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center fw-bold">
+        @TempData["Error"]
+    </div>
+}
+
 <form asp-action="Create" id="addProductForm" method="post">
     <div class="form-group">
         <label asp-for="Name"></label>
