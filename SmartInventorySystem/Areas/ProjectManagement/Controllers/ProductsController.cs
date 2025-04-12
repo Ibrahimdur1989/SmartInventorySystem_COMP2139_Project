@@ -50,29 +50,38 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Price,QuantityInStock,LowStockThreshold,CategoryId")] Product product)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    _context.Add(product);
+                    await _context.SaveChangesAsync();
+                    
+                    _logger.LogInformation("Product {Name} Created at {Time}",product.Name, DateTime.Now);
+                    
+                    if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    {
+                        return Json(new { success = true });
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while Create Product at {Time}", DateTime.Now);
+
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    return Json(new { success = true });
+                    return StatusCode(500, new { success = false, message = 
+                        "Server error occurred while processing your request. Please try again later." });
                 }
-                return RedirectToAction(nameof(Index));
+                
+                TempData["Error"] = "An error occurred while processing your request. Please try again later.";
             }
-
-            var categories = _context.Categories.ToList();
-            if (!categories.Any())
-            {
-                ViewBag.NoCategories = "No categories found. Please add a category first.";
-            }
+                        
             PopulateCategoryDropdown(product.CategoryId);
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
-             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return BadRequest(new { success = false, errors });
-            }
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            
             return View(product);
         }
 
@@ -102,6 +111,7 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         {
             if (ProductId != product.ProductId)
             {
+                _logger.LogWarning("Product ID didn't match");
                 return NotFound();
             }
 
@@ -111,10 +121,12 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
                 {
                     _context.Update(product);
                     await _context.SaveChangesAsync();
+                    _logger.LogInformation("Product {Name} Updated at {Time}", product.Name, DateTime.Now);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    // !ProductExists(product.ProductId)
+                    _logger.LogError(ex, "Error while updating product");
+                    
                     if (!_context.Products.Any(e => e.ProductId == product.ProductId))
                     {
                         return NotFound();
@@ -180,12 +192,27 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int ProductId)
         {
-            var product = await _context.Products.FindAsync(ProductId);
-            if (product != null)
+            try
             {
-                _context.Products.Remove(product);
-                await _context.SaveChangesAsync();
+                var product = await _context.Products.FindAsync(ProductId);
+                if (product != null)
+                {
+                    _context.Products.Remove(product);
+                    await _context.SaveChangesAsync();
+                    
+                    _logger.LogInformation("Product {Name} Deleted at {Time}", product.Name, DateTime.Now);
+                }
+                else
+                {
+                    _logger.LogWarning("Could not find Products with id of {ProductId}", ProductId);
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while deleting product");
+                TempData["Error"] = "An error occurred while deleting product";
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 
