@@ -1,3 +1,4 @@
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -6,16 +7,20 @@
     <h1 class="display-4">Welcome</h1>
     <h1 class="display-3">Smart Inventory Management System</h1>
     <br></br>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <a asp-area="ProjectManagement" asp-controller="Categories" asp-action="Index" class="btn btn-primary btn-lg">Manage Categories</a>
+            </div>
+            <div class="col-md-4">
+                <a asp-area="ProjectManagement" asp-controller="Products" asp-action="Index" class="btn btn-success btn-lg">Manage Products</a>
+            </div>
+            <div class="col-md-4">
+                <a asp-area="ProjectManagement" asp-controller="Orders" asp-action="Index" class="btn btn-warning btn-lg">Manage Orders</a>
+            </div>
+        </div>  
+    }
     <!-- Navigation buttons for managing different sections -->
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <a asp-area="ProjectManagement" asp-controller="Categories" asp-action="Index" class="btn btn-primary btn-lg">Manage Categories</a>
-        </div>
-        <div class="col-md-4">
-            <a asp-area="ProjectManagement" asp-controller="Products" asp-action="Index" class="btn btn-success btn-lg">Manage Products</a>
-        </div>
-        <div class="col-md-4">
-            <a asp-area="ProjectManagement" asp-controller="Orders" asp-action="Index" class="btn btn-warning btn-lg">Manage Orders</a>
-        </div>
-    </div>
+    
 </div>
