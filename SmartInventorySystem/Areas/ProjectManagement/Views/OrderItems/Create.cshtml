@@ -3,6 +3,13 @@
 
 <h2>Create Order Item</h2>
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center fw-bold">
+        @TempData["Error"]
+    </div>
+}
+
 <form asp-action="Create">
     <div class="form-group">
         <label asp-for="OrderId" class="control-label">Select Order</label>
