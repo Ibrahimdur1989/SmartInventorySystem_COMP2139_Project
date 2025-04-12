@@ -14,11 +14,13 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
     [Route("[area]/[controller]/[action]")]
     public class OrderItemsController : Controller
     {
+        private readonly ILogger<OrderItemsController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public OrderItemsController(ApplicationDbContext context)
+        public OrderItemsController(ApplicationDbContext context, ILogger<OrderItemsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: OrderItems
@@ -46,11 +48,22 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OrderId,ProductId,Quantity,Price")] OrderItem orderItem)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(orderItem);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(orderItem);
+                    await _context.SaveChangesAsync();
+                    
+                    _logger.LogInformation("Order item created");
+                    
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Order item creation failed");
+                TempData["Error"] = "Something went wrong";
             }
 
             ViewBag.Orders = new SelectList(_context.Orders, "Id", "Id");
