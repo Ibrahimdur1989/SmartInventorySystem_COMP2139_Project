@@ -134,7 +134,7 @@ namespace SmartInventorySystem.Areas.ProjectManagement.Controllers
         // POST: Orders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,OrderDate,TotalPrice,Status")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,GuestName,OrderDate,TotalPrice,Status")] Order order)
         {
             if (id != order.Id)
             {

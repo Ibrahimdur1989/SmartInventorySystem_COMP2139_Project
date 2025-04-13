@@ -7,6 +7,8 @@ namespace SmartInventorySystem.Controllers;
 // HomeController handles navigation to primary pages like Index and Privacy
 public class HomeController : Controller
 {
+    
+    
     private readonly ILogger<HomeController> _logger; // Logger for debugging and error tracking
 
     // Constructor to initialize the logger via dependency injection
@@ -48,6 +50,9 @@ public class HomeController : Controller
         }
         return View("ServerError");
     }
+    
+    // for 500 Error 
+    //public IActionResult CauseError() { throw new Exception("test 500 error"); }
 
     
     [HttpGet]
@@ -84,6 +89,9 @@ public class HomeController : Controller
         }
         return View("Error");
     }
+    
+    
+
     
     
 }
