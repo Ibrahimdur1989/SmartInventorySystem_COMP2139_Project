@@ -39,12 +39,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 
 var app = builder.Build();
-// if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
-}
+
+
+app.UseExceptionHandler("/Home/Error");
+app.UseHsts();
+app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
