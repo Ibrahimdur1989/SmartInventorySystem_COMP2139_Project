@@ -1,5 +1,5 @@
 
-Smart Inventory System – COMP2139 Web Application Development Project
+# Smart Inventory System – COMP2139 Web Application Development Project
 
 This repository contains the final group project for COMP2139 – Web Application Development at George Brown College (Semester 4, 2025).
 The Smart Inventory System is a full-stack web application for managing products, categories, and orders.
@@ -7,7 +7,7 @@ The Smart Inventory System is a full-stack web application for managing products
 This project was developed collaboratively by a team of three members.
 My contributions included building the Authentication system, Admin and User Dashboards, Database Structure, UI improvements, and fixing key functionalities.
 
-* Project Overview
+# Project Overview
   The Smart Inventory System allows:
 
   - Admin users to create and manage product categories, products, and view all orders
@@ -32,7 +32,7 @@ Pass: Admin1912/*
 
 
  
-* Key Features
+# Key Features
 
   - User Registration and Authentication
   - Role-Based Authorization (Admin / Regular User)
@@ -42,7 +42,7 @@ Pass: Admin1912/*
   - Error handling pages (404 Not Found and 500 Server Error)
   - Responsive Bootstrap Design
  
-* My Contributions
+# My Contributions
 
   - Designed and implemented major UI components (Navbar, Header, Footer).
   - Developed and fixed functionalities for Edit, Delete, and Details pages.
