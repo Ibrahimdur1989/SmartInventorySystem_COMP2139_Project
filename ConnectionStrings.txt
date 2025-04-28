@@ -1,0 +1,14 @@
+Postgres - PgAdmin
+
+ "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=smart_inventory;Username=postgres;Password=Admin1912"
+    
+  },
+
+
+
+Postgres - Supabase
+
+"ConnectionStrings": {
+    "DefaultConnection": "User Id=postgres.nfzmvvbodtrixzxqnefy;Password=Admin1912;Server=aws-0-ca-central-1.pooler.supabase.com;Port=5432;Database=postgres"
+  },

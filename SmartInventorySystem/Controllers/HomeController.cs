@@ -52,7 +52,7 @@ public class HomeController : Controller
     }
     
     // for 500 Error 
-    //public IActionResult CauseError() { throw new Exception("test 500 error"); }
+    public IActionResult CauseError() { throw new Exception("test 500 error"); }
 
     
     [HttpGet]
