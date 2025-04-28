@@ -3,3 +3,5 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+SmartInventorySystem/appsettings.json
+SmartInventorySystem/appsettings.Development.json
